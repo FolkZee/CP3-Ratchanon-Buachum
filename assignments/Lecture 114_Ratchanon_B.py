@@ -13,12 +13,13 @@ def currency_converter(event):
         result = c.convert(first_selected_opt.get(), second_selected_opt.get(), int(textbox_amount.get()))
         label_first_currency.configure(text=f'{int(textbox_amount.get())} {first_selected_opt.get()} =')
         label_result.configure(text=f'{result:.5f} {second_selected_opt.get()}')
+        label_stats.configure(text=f'{first_selected_opt.get()} to {second_selected_opt.get()} Stats')
         thirty_day_currency: List[float] = []
         sum_thirty_day = 0
         for i in range(30):
             i += 1
             old_date = datetime.datetime.now() - datetime.timedelta(i)
-            previous_currency = c.get_rate(second_selected_opt.get(), first_selected_opt.get(), old_date)
+            previous_currency = c.get_rate(first_selected_opt.get(), second_selected_opt.get(), old_date)
             thirty_day_currency.append(float(previous_currency))
             sum_thirty_day += previous_currency
         thirty_average = sum_thirty_day / 30
@@ -30,7 +31,7 @@ def currency_converter(event):
         for i in range(90):
             i += 1
             old_date = datetime.datetime.now() - datetime.timedelta(i)
-            previous_currency = c.get_rate(second_selected_opt.get(), first_selected_opt.get(), old_date)
+            previous_currency = c.get_rate(first_selected_opt.get(), second_selected_opt.get(), old_date)
             ninety_day_currency.append(float(previous_currency))
             sum_ninety_day += previous_currency
         ninety_average = sum_ninety_day / 90
